@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CivicResolve - Civic Issues Resolution</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#1f2937;
+}
+
+/* HEADER */
+
+header{
+    background:#12372a;
+    color:white;
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#90ee90;
+}
+
+nav button{
+    background:none;
+    border:none;
+    color:white;
+    margin-left:20px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+nav button:hover{
+    color:#90ee90;
+}
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#12372a,#1f6f50);
+    color:white;
+    padding:60px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+}
+
+.hero-text{
+    max-width:650px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:18px;
+    line-height:1.6;
+    opacity:.9;
+}
+
+.hero button{
+    margin-top:25px;
+    padding:14px 25px;
+    border:none;
+    border-radius:8px;
+    background:#90ee90;
+    color:#12372a;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.hero-card{
+    background:white;
+    color:#222;
+    padding:25px;
+    border-radius:15px;
+    width:280px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.hero-card h3{
+    margin-bottom:15px;
+}
+
+.progress{
+    height:10px;
+    background:#ddd;
+    border-radius:10px;
+    margin:8px 0 18px;
+}
+
+.progress div{
+    height:100%;
+    width:75%;
+    background:#28a745;
+    border-radius:10px;
+}
+
+/* GENERAL */
+
+.container{
+    width:86%;
+    margin:35px auto;
+}
+
+.section-title{
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.stat-card{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.stat-card h2{
+    font-size:30px;
+    margin-top:8px;
+}
+
+.stat-card p{
+    color:#777;
+}
+
+/* REPORT FORM */
+
+.form-box{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.full{
+    grid-column:1/3;
+}
+
+.submit-btn{
+    margin-top:20px;
+    background:#12372a;
+    color:white;
+    padding:13px 25px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.submit-btn:hover{
+    background:#1f6f50;
+}
+
+/* PRIORITY */
+
+.priority-box{
+    margin-top:25px;
+    background:#eef8f1;
+    border-left:5px solid #28a745;
+    padding:18px;
+    border-radius:8px;
+}
+
+.priority-score{
+    font-size:32px;
+    font-weight:bold;
+    margin:5px 0;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+}
+
+.panel{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+/* FILTERS */
+
+.filters{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.filters input,
+.filters select{
+    width:auto;
+    flex:1;
+}
+
+/* ISSUE CARD */
+
+.issue{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:15px;
+}
+
+.issue-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.issue h3{
+    margin-bottom:8px;
+}
+
+.issue p{
+    color:#666;
+    line-height:1.5;
+}
+
+.badge{
+    padding:5px 10px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.high{
+    background:#ffd6d6;
+    color:#c62828;
+}
+
+.medium{
+    background:#fff0c2;
+    color:#9a6700;
+}
+
+.low{
+    background:#d9f7df;
+    color:#187a31;
+}
+
+.status{
+    margin-top:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.status span{
+    padding:6px 10px;
+    border-radius:5px;
+    background:#eee;
+    font-size:12px;
+}
+
+.status .active{
+    background:#d9f7df;
+    color:#187a31;
+}
+
+.issue-actions{
+    margin-top:15px;
+}
+
+.issue-actions button{
+    padding:8px 12px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:5px;
+}
+
+.verify{
+    background:#e7f1ff;
+    color:#1455a0;
+}
+
+.resolve{
+    background:#d9f7df;
+    color:#187a31;
+}
+
+/* MAP */
+
+.map{
+    height:350px;
+    border-radius:12px;
+    background:
+    linear-gradient(90deg,transparent 48%,#d4d4d4 49%,#d4d4d4 51%,transparent 52%),
+    linear-gradient(0deg,transparent 48%,#d4d4d4 49%,#d4d4d4 51%,transparent 52%),
+    #e8f0e5;
+    position:relative;
+    overflow:hidden;
+}
+
+.road{
+    position:absolute;
+    background:#c9c9c9;
+}
+
+.road1{
+    width:120%;
+    height:35px;
+    top:120px;
+    left:-20px;
+    transform:rotate(20deg);
+}
+
+.road2{
+    width:120%;
+    height:30px;
+    top:230px;
+    left:-20px;
+    transform:rotate(-15deg);
+}
+
+.pin{
+    position:absolute;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#e53935;
+    border:4px solid white;
+    box-shadow:0 2px 5px #555;
+    cursor:pointer;
+}
+
+.pin1{top:70px;left:30%}
+.pin2{top:180px;left:65%;background:#ff9800}
+.pin3{top:270px;left:40%;background:#28a745}
+.pin4{top:120px;left:80%;background:#e53935}
+
+/* DEPARTMENT */
+
+.department{
+    margin-top:15px;
+}
+
+.department select{
+    margin-top:5px;
+}
+
+/* ALERT */
+
+.alert{
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:15px;
+    background:#fff3cd;
+    color:#856404;
+}
+
+/* FOOTER */
+
+footer{
+    background:#12372a;
+    color:white;
+    text-align:center;
+    padding:25px;
+    margin-top:50px;
+}
+
+/* HIDDEN */
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+
+    .hero{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .dashboard{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:1;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .filters{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<div class="logo">
+🌱 Civic<span>Resolve</span>
+</div>
+
+<nav>
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('report')">Report Issue</button>
+<button onclick="showSection('dashboard')">Authority Dashboard</button>
+</nav>
+
+</header>
+
+
+<!-- HOME -->
+
+<section id="home" class="section active">
+
+<div class="hero">
+
+<div class="hero-text">
+
+<h1>
+Make Your Community Better.
+</h1>
+
+<p>
+Report civic problems, verify genuine issues,
+and help authorities prioritize the problems
+that need immediate attention.
+</p>
+
+<button onclick="showSection('report')">
+🚨 Report a Civic Issue
+</button>
+
+</div>
+
+
+<div class="hero-card">
+
+<h3>Community Impact</h3>
+
+<p>Issues resolved this month</p>
+
+<div class="progress">
+<div></div>
+</div>
+
+<strong>75% Resolved</strong>
+
+<br><br>
+
+<p>Community verified reports</p>
+
+<h2>1,284</h2>
+
+</div>
+
+</div>
+
+
+<div class="container">
+
+<h2 class="section-title">
+📊 Community Overview
+</h2>
+
+<div class="stats">
+
+<div class="stat-card">
+<p>Total Reports</p>
+<h2 id="totalReports">128</h2>
+</div>
+
+<div class="stat-card">
+<p>High Priority</p>
+<h2 id="highReports">24</h2>
+</div>
+
+<div class="stat-card">
+<p>In Progress</p>
+<h2>42</h2>
+</div>
+
+<div class="stat-card">
+<p>Resolved</p>
+<h2>62</h2>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="container">
+
+<h2 class="section-title">
+💡 How CivicResolve Works
+</h2>
+
+<div class="stats">
+
+<div class="stat-card">
+<h2>1️⃣</h2>
+<h3>Report</h3>
+<p>
+Citizen reports the problem with location,
+category, severity and evidence.
+</p>
+</div>
+
+<div class="stat-card">
+<h2>2️⃣</h2>
+<h3>Verify</h3>
+<p>
+Community confirmation and evidence
+help reduce fake reports.
+</p>
+</div>
+
+<div class="stat-card">
+<h2>3️⃣</h2>
+<h3>Prioritize</h3>
+<p>
+Smart priority score identifies urgent
+problems automatically.
+</p>
+</div>
+
+<div class="stat-card">
+<h2>4️⃣</h2>
+<h3>Resolve</h3>
+<p>
+Authorities assign departments and
+update the resolution status.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REPORT -->
+
+<section id="report" class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+📝 Report a Civic Issue
+</h2>
+
+<div class="form-box">
+
+<div class="form-grid">
+
+<div>
+
+<label>Issue Category</label>
+
+<select id="category">
+
+<option value="road">🚧 Damaged Road</option>
+<option value="water">💧 Water Supply</option>
+<option value="drain">🌊 Blocked Drain</option>
+<option value="garbage">🗑️ Garbage</option>
+<option value="streetlight">💡 Streetlight</option>
+<option value="electricity">⚡ Electricity</option>
+<option value="other">📌 Other</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Location / Area</label>
+
+<input
+id="location"
+placeholder="Example: Main Road, Nandyal"
+>
+
+</div>
+
+
+<div>
+
+<label>Severity</label>
+
+<select id="severity" onchange="calculatePriority()">
+
+<option value="1">Low</option>
+<option value="2">Medium</option>
+<option value="3">High</option>
+<option value="4">Critical</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>People Affected</label>
+
+<input
+id="people"
+type="number"
+min="1"
+value="10"
+oninput="calculatePriority()"
+>
+
+</div>
+
+
+<div class="full">
+
+<label>Description</label>
+
+<textarea
+id="description"
+placeholder="Describe the civic problem clearly..."
+></textarea>
+
+</div>
+
+
+<div>
+
+<label>Upload Evidence Photo</label>
+
+<input
+type="file"
+id="photo"
+accept="image/*"
+>
+
+</div>
+
+
+<div>
+
+<label>Contact / Citizen ID</label>
+
+<input
+id="citizen"
+placeholder="Optional"
+>
+
+</div>
+
+</div>
+
+
+<div class="priority-box">
+
+<h3>🧠 Smart Priority Engine</h3>
+
+<p>
+The system considers severity and number of people affected
+to estimate the urgency of this complaint.
+</p>
+
+<div class="priority-score" id="priorityScore">
+20
+</div>
+
+<p id="priorityText">
+Low Priority
+</p>
+
+</div>
+
+
+<button
+class="submit-btn"
+onclick="submitIssue()"
+>
+🚀 Submit Report
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+🏛️ Authority Dashboard
+</h2>
+
+
+<div class="alert">
+
+⚠️ <strong>Attention:</strong>
+3 critical issues require immediate action.
+</div>
+
+
+<div class="dashboard">
+
+<div class="panel">
+
+<h2>Reported Issues</h2>
+
+<br>
+
+<div class="filters">
+
+<input
+id="search"
+placeholder="🔎 Search issue..."
+oninput="filterIssues()"
+>
+
+<select
+id="filterCategory"
+onchange="filterIssues()"
+>
+
+<option value="all">All Categories</option>
+<option value="Road">Road</option>
+<option value="Water">Water</option>
+<option value="Drainage">Drainage</option>
+<option value="Garbage">Garbage</option>
+
+</select>
+
+</div>
+
+
+<div id="issuesContainer">
+
+
+<!-- ISSUE 1 -->
+
+<div class="issue" data-category="Road">
+
+<div class="issue-header">
+
+<div>
+
+<h3>🚧 Large Pothole on Main Road</h3>
+
+<p>
+📍 Main Road, Ward 4
+</p>
+
+</div>
+
+<span class="badge high">
+CRITICAL
+</span>
+
+</div>
+
+<p>
+Large pothole near school entrance.
+Several vehicles have been affected.
+</p>
+
+<div class="status">
+
+<span class="active">Reported</span>
+→
+<span class="active">Verified</span>
+→
+<span>Assigned</span>
+→
+<span>Resolved</span>
+
+</div>
+
+<div class="issue-actions">
+
+<button
+class="verify"
+onclick="verifyIssue(this)"
+>
+👍 Verify (24)
+</button>
+
+<button
+class="resolve"
+onclick="resolveIssue(this)"
+>
+✓ Mark Resolved
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ISSUE 2 -->
+
+<div class="issue" data-category="Drainage">
+
+<div class="issue-header">
+
+<div>
+
+<h3>🌊 Blocked Drain</h3>
+
+<p>
+📍 Gandhi Nagar, Ward 7
+</p>
+
+</div>
+
+<span class="badge high">
+HIGH
+</span>
+
+</div>
+
+<p>
+Drain is blocked and water is accumulating
+near residential houses.
+</p>
+
+<div class="status">
+
+<span class="active">Reported</span>
+→
+<span class="active">Verified</span>
+→
+<span class="active">In Progress</span>
+→
+<span>Resolved</span>
+
+</div>
+
+<div class="issue-actions">
+
+<button
+class="verify"
+onclick="verifyIssue(this)"
+>
+👍 Verify (15)
+</button>
+
+<button
+class="resolve"
+onclick="resolveIssue(this)"
+>
+✓ Mark Resolved
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ISSUE 3 -->
+
+<div class="issue" data-category="Water">
+
+<div class="issue-header">
+
+<div>
+
+<h3>💧 Irregular Water Supply</h3>
+
+<p>
+📍 Lakshmi Nagar, Ward 2
+</p>
+
+</div>
+
+<span class="badge medium">
+MEDIUM
+</span>
+
+</div>
+
+<p>
+Residents are receiving water only
+once every two days.
+</p>
+
+<div class="status">
+
+<span class="active">Reported</span>
+→
+<span>Verified</span>
+→
+<span>Assigned</span>
+→
+<span>Resolved</span>
+
+</div>
+
+<div class="issue-actions">
+
+<button
+class="verify"
+onclick="verifyIssue(this)"
+>
+👍 Verify (8)
+</button>
+
+<button
+class="resolve"
+onclick="resolveIssue(this)"
+>
+✓ Mark Resolved
+</button>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- RIGHT PANEL -->
+
+<div class="panel">
+
+<h2>🗺️ Issue Map</h2>
+
+<br>
+
+<div class="map">
+
+<div class="road road1"></div>
+
+<div class="road road2"></div>
+
+<div class="pin pin1" title="Critical Road Issue"></div>
+
+<div class="pin pin2" title="Water Issue"></div>
+
+<div class="pin pin3" title="Resolved Issue"></div>
+
+<div class="pin pin4" title="Drainage Issue"></div>
+
+</div>
+
+
+<br>
+
+<h3>🏢 Assign Department</h3>
+
+<div class="department">
+
+<select>
+
+<option>Select Department</option>
+<option>Roads & Infrastructure</option>
+<option>Water Department</option>
+<option>Sanitation Department</option>
+<option>Electricity Department</option>
+<option>Municipality</option>
+
+</select>
+
+</div>
+
+
+<br>
+
+<h3>📊 Priority Logic</h3>
+
+<p style="line-height:1.7;color:#666">
+
+<strong>Priority Score =</strong><br>
+
+Severity × 20 +<br>
+Affected Population × 0.5 +<br>
+Community Verification × 2 +<br>
+Safety Risk Bonus
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>
+🌱 CivicResolve — Technology for Better Communities
+</p>
+
+<p style="margin-top:8px;font-size:13px">
+Report • Verify • Prioritize • Resolve
+</p>
+
+</footer>
+
+
+<script>
+
+/* NAVIGATION */
+
+function showSection(sectionId){
+
+    document.querySelectorAll(".section")
+    .forEach(section=>{
+        section.classList.remove("active");
+    });
+
+    document.getElementById(sectionId)
+    .classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* PRIORITY CALCULATION */
+
+function calculatePriority(){
+
+    let severity =
+        Number(document.getElementById("severity").value);
+
+    let people =
+        Number(document.getElementById("people").value) || 0;
+
+
+    let score =
+        (severity * 20) +
+        (people * 0.5);
+
+
+    if(score > 100)
+        score = 100;
+
+
+    document.getElementById("priorityScore")
+    .innerText = Math.round(score);
+
+
+    let text =
+        document.getElementById("priorityText");
+
+
+    if(score >= 80){
+
+        text.innerText =
+        "🚨 CRITICAL — Immediate attention required";
+
+    }
+    else if(score >= 60){
+
+        text.innerText =
+        "🔴 HIGH — Should be addressed soon";
+
+    }
+    else if(score >= 35){
+
+        text.innerText =
+        "🟠 MEDIUM — Requires attention";
+
+    }
+    else{
+
+        text.innerText =
+        "🟢 LOW — Can be scheduled";
+
+    }
+
+}
+
+
+/* SUBMIT ISSUE */
+
+function submitIssue(){
+
+    let category =
+        document.getElementById("category").value;
+
+    let location =
+        document.getElementById("location").value;
+
+    let description =
+        document.getElementById("description").value;
+
+    let score =
+        document.getElementById("priorityScore").innerText;
+
+
+    if(location === "" || description === ""){
+
+        alert(
+        "Please enter the location and description."
+        );
+
+        return;
+
+    }
+
+
+    let categoryName =
+        document.getElementById("category")
+        .options[
+            document.getElementById("category").selectedIndex
+        ].text;
+
+
+    let newIssue =
+    document.createElement("div");
+
+
+    newIssue.className="issue";
+
+
+    let priorityClass =
+        score >= 80 ? "high" :
+        score >= 50 ? "medium" :
+        "low";
+
+
+    newIssue.setAttribute(
+        "data-category",
+        categoryName
+    );
+
+
+    newIssue.innerHTML = `
+
+        <div class="issue-header">
+
+            <div>
+
+                <h3>
+                ${categoryName}
+                </h3>
+
+                <p>
+                📍 ${location}
+                </p>
+
+            </div>
+
+            <span class="badge ${priorityClass}">
+            ${score >= 80 ? "HIGH" :
+              score >= 50 ? "MEDIUM" : "LOW"}
+            </span>
+
+        </div>
+
+        <p>
+        ${description}
+        </p>
+
+        <div class="status">
+
+            <span class="active">
+            Reported
+            </span>
+
+            →
+
+            <span>
+            Verification Pending
+            </span>
+
+            →
+
+            <span>
+            Assigned
+            </span>
+
+            →
+
+            <span>
+            Resolved
+            </span>
+
+        </div>
+
+        <div class="issue-actions">
+
+            <button
+            class="verify"
+            onclick="verifyIssue(this)"
+            >
+            👍 Verify (0)
+            </button>
+
+            <button
+            class="resolve"
+            onclick="resolveIssue(this)"
+            >
+            ✓ Mark Resolved
+            </button>
+
+        </div>
+
+    `;
+
+
+    document
+    .getElementById("issuesContainer")
+    .prepend(newIssue);
+
+
+    alert(
+    "✅ Issue submitted successfully!\n\n" +
+    "Priority Score: " + score +
+    "\n\nYour report has been sent to the authority dashboard."
+    );
+
+
+    document.getElementById("location").value="";
+    document.getElementById("description").value="";
+
+    showSection("dashboard");
+
+
+    let total =
+        Number(
+        document.getElementById("totalReports").innerText
+        );
+
+    document.getElementById("totalReports")
+    .innerText = total + 1;
+
+}
+
+
+/* VERIFY */
+
+function verifyIssue(button){
+
+    let text = button.innerText;
+
+    let number =
+        Number(
+        text.match(/\d+/)?.[0] || 0
+        );
+
+    number++;
+
+    button.innerText =
+        "👍 Verify (" + number + ")";
+
+
+    button.style.background="#c8f7d2";
+
+}
+
+
+/* RESOLVE */
+
+function resolveIssue(button){
+
+    let issue =
+        button.closest(".issue");
+
+
+    let status =
+        issue.querySelector(".status");
+
+
+    let spans =
+        status.querySelectorAll("span");
+
+
+    spans.forEach(span=>{
+        span.classList.remove("active");
+    });
+
+
+    spans[spans.length-1]
+    .classList.add("active");
+
+
+    alert(
+    "✅ Issue marked as resolved."
+    );
+
+}
+
+
+/* SEARCH + FILTER */
+
+function filterIssues(){
+
+    let search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+
+    let category =
+        document.getElementById("filterCategory")
+        .value;
+
+
+    let issues =
+        document.querySelectorAll(".issue");
+
+
+    issues.forEach(issue=>{
+
+        let text =
+            issue.innerText.toLowerCase();
+
+
+        let issueCategory =
+            issue.dataset.category;
+
+
+        let searchMatch =
+            text.includes(search);
+
+
+        let categoryMatch =
+            category === "all" ||
+            issueCategory === category;
+
+
+        if(searchMatch && categoryMatch){
+
+            issue.style.display="block";
+
+        }
+        else{
+
+            issue.style.display="none";
+
+        }
+
+    });
+
+}
+
+
+/* INITIAL PRIORITY */
+
+calculatePriority();
+
+</script>
+
+</body>
+</html>
